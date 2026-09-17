@@ -20,3 +20,11 @@
 隐藏的入口不能通过普通导航切换进入，导航指示器也随当前可见页面更新。该改动只补充导航行为，不改变控件绘制与整体风格；导航显隐接口及对应回归测试已同步至独立的 FluentPy 开源仓库。
 
 FluentPy 是自研、独立实现的 Qt Python UI 库，采用 MIT 许可，并非其他同类 GPLv3 组件库的分支、封装或换皮。Qt / PySide6 和 Microsoft Fluent System Icons 属于第三方依赖，分别遵循各自许可，相关声明保留在发布包的 `licenses` 目录中。
+
+## 音符时间轴控件
+
+歌曲卡片内的音符预览现已整理为 FluentPy 的正式控件 [`NoteTimeline`](https://github.com/XDDXMT/FluentPy/blob/main/docs/note-timeline.md)，可通过 `from fluentpy import NoteEvent, NoteTimeline` 使用。独立库与本项目配套副本包含相同实现。
+
+控件保留横向音符条、分轨配色和细播放游标，支持自定义音域、总时长、空状态文字、浅深色主题与高分屏。音符层按数据和显示条件缓存，播放位置更新时复用，不反复遍历整曲音符。
+
+库只接收以秒为单位的 `NoteEvent` 数据，不依赖 MIDI/NBS 解析器、转换模型或播放器。客户端的 `fluentmelody/client/note_view.py` 负责把转换结果传入正式控件，并沿用 MIDI 48–85 的展示音域；读取和重新转换歌曲时会清空旧音符并重置游标。控件不处理点击跳播或键鼠演奏。

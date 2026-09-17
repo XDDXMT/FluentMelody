@@ -22,6 +22,7 @@ from ..core.playback import Player, Hotkeys
 from ..core.hotkeys import validate_bindings
 from .shortcut_edit import ShortcutEdit
 from .file_drop import MusicFileDropFilter
+from .note_view import NoteView
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -80,42 +81,6 @@ class Bus(QtCore.QObject):
     done = Signal(int,object,object)
     message = Signal(str)
     hotkey = Signal(object)
-
-class NoteView(QtWidgets.QWidget):
-    """A compact piano-roll using the library's existing theme colors."""
-    def __init__(self):
-        super().__init__()
-        self.plan = None
-        self.position = 0.0
-        self.setMinimumHeight(78)
-        self.setMaximumHeight(110)
-        theme.subscribe(self,self.update)
-
-    def paintEvent(self,event):
-        p = QtGui.QPainter(self)
-        p.setRenderHint(QtGui.QPainter.RenderHint.Antialiasing)
-        t = theme.tokens
-        p.fillRect(self.rect(),QtGui.QColor(t.surface))
-        width, height = self.width(), self.height()
-        p.setPen(QtGui.QPen(QtGui.QColor(t.border)))
-        for y in range(1,5):
-            p.drawLine(0,y*height//5,width,y*height//5)
-        if not self.plan:
-            p.setPen(QtGui.QColor(t.text_muted))
-            p.drawText(self.rect(),QtCore.Qt.AlignmentFlag.AlignCenter,'载入歌曲后，音符会显示在这里')
-            return
-        duration = max(.1,self.plan['duration'])
-        colors = [t.accent,'#77bfa3','#d3a8e8','#e7bb76']
-        for idx, track in enumerate(self.plan['tracks']):
-            color = QtGui.QColor(colors[idx%len(colors)]); color.setAlpha(185)
-            p.setBrush(color); p.setPen(QtCore.Qt.PenStyle.NoPen)
-            for ev in track['events']:
-                x = ev['start']/duration*width
-                y = (85-ev['midi'])/38*(height-8)
-                p.drawRoundedRect(QtCore.QRectF(x,y,max(2,ev['duration']/duration*width),4),2,2)
-        p.setPen(QtGui.QPen(QtGui.QColor(t.text),1))
-        x = min(width,self.position/duration*width)
-        p.drawLine(int(x),0,int(x),height)
 
 class MainWindow(FluentWindow):
     def __init__(self, dry_run=False, config_dir=None):
@@ -602,7 +567,7 @@ class MainWindow(FluentWindow):
             self.log('请先退出房间再转换本地歌曲。'); return
         self.player.stop()
         self.plan = None
-        self.notes_view.plan = None; self.notes_view.update()
+        self.notes_view.plan = None
         self.play_label.setText('正在转换歌曲')
         if 'convert' in self._pending:
             self._conversion_refresh_requested = True
@@ -627,7 +592,7 @@ class MainWindow(FluentWindow):
                 self.convert_song()
                 return
             self.plan = plan
-            self.notes_view.plan = plan; self.notes_view.update()
+            self.notes_view.plan = plan
             self.conversion_info.setText(plan['summary'])
             self.play_label.setText(plan['name'])
             self.log(plan['summary'])
@@ -1139,7 +1104,7 @@ class MainWindow(FluentWindow):
             position = self.room.get('position',0)
         self.clock_label.setText(clock_text(position)+' / '+clock_text(duration))
         self.progress.setValue(min(1000,int(position/duration*1000)) if duration else 0)
-        self.notes_view.position = position; self.notes_view.update()
+        self.notes_view.set_position(position)
         if self.room:
             status = self.room['status']
             if status=='countdown':

@@ -15,6 +15,7 @@ from .dialog import FramelessDialog, MaskDialog, MaskedDialog, MessageBox
 from .line_edit import DoubleSpinBox, LineEdit, PasswordLineEdit, RichTextEdit, SearchLineEdit, SpinBox, TextEdit
 from .navigation import AnimatedStackedWidget, NavigationItem, NavigationSidebar, NavigationView
 from .navigation_controls import BreadcrumbBar, Pivot, SegmentedToolWidget, SegmentedWidget, TabBar
+from .note_timeline import NoteEvent, NoteTimeline
 from .progress_bar import ProgressBar
 from .radio_button import RadioButton
 from .scroll_bar import FluentScrollBar
@@ -45,6 +46,8 @@ __all__ = [
     "NavigationItem",
     "NavigationSidebar",
     "NavigationView",
+    "NoteEvent",
+    "NoteTimeline",
     "MaskDialog",
     "MaskedDialog",
     "MessageBox",

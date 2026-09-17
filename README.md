@@ -6,6 +6,8 @@ Windows 口风琴演奏工具，界面使用自研的 [FluentPy](https://github.
 
 制作作者：性邓的小馒头
 
+歌曲卡片中的音符预览使用自研 FluentPy 的正式控件 [NoteTimeline](https://github.com/XDDXMT/FluentPy/blob/main/docs/note-timeline.md)，支持分轨显示与播放游标，可在其他 Qt 项目中独立使用。
+
 ![Fluent Melody 主界面](界面预览.png)
 
 ## 开源与许可

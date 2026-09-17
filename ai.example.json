@@ -1,0 +1,21 @@
+{
+  "host": "127.0.0.1",
+  "port": 8766,
+  "database": "data/ai.sqlite3",
+  "backend": "unconfigured",
+  "api_base": "https://api.openai.com/v1",
+  "api_format": "responses",
+  "api_key_env": "FLUENTMELODY_AI_KEY",
+  "model": "",
+  "workers": 2,
+  "max_pending": 16,
+  "max_per_day": 20,
+  "max_revisions": 3,
+  "credits_per_job": 1,
+  "retention_days": 7,
+  "timeout": 120,
+  "max_output_tokens": 8192,
+  "codex_executable": "codex",
+  "codex_home": "",
+  "codex_service_account_confirmed": false
+}

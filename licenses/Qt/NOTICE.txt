@@ -1,0 +1,7 @@
+This distribution uses unmodified Qt/PySide6 shared libraries through PySide6.
+The installed PySide6 metadata declares LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only.
+Qt/PySide copyright belongs to The Qt Company and other contributors.
+The libraries remain separate in _internal and may be replaced with compatible builds.
+PySide source: https://code.qt.io/cgit/pyside/pyside-setup.git/
+Qt source: https://code.qt.io/cgit/qt/qtbase.git/
+Version information is in dependency-versions.txt.

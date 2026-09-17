@@ -1,0 +1,56 @@
+# Python and local development environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.idea/
+.vscode/
+
+# Packaged applications and generated files (including nested copies)
+/release*/
+/build/
+/dist/
+/work/
+_internal/
+*.exe
+*.dll
+*.pyd
+*.spec
+*.zip
+*.7z
+*.log
+*.tmp
+
+# Local configuration, device credentials, service databases and issued tokens
+.env
+.env.*
+!.env.example
+data/
+settings.json
+device.dat
+ai.json
+ai.local.json
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+*.pem
+*.key
+tokens*.txt
+tokens*.json
+
+# User songs and rendered previews; only bundled examples are versioned
+*.mid
+*.midi
+*.nbs
+!/assets/*.nbs
+*.wav
+*.mp3
+
+# Historical UI captures; keep the current documented previews
+/*预览.png
+!/界面预览.png
+!/快捷键设置预览.png
+!/Beta设置预览.png
+!/关于页面预览.png
